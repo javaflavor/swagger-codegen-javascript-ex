@@ -1,0 +1,64 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.redhat.example</groupId>
+    <artifactId>swagger-codegen-javascript-ex</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
+    
+    <properties>
+    	<swagger-codegen-version>2.2.2</swagger-codegen-version>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>io.swagger.codegen.SwaggerCodegen</mainClass>
+					<arguments>
+						<!-- Sample arguments for ES6 client generation -->
+						<argument>generate</argument>
+						<argument>-l</argument>
+						<argument>javascript-ex</argument>
+						<argument>--additional-properties</argument>
+						<argument>usePromises=true,useES6=true,apiSuffix=Service</argument>
+						<argument>-i</argument>
+						<argument>users-api.json</argument>
+						<argument>-o</argument>
+						<argument>user_search_api</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-codegen</artifactId>
+            <version>${swagger-codegen-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-codegen-cli</artifactId>
+            <version>${swagger-codegen-version}</version>
+        </dependency>
+    </dependencies>
+</project>

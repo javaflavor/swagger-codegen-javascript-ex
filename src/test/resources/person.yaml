@@ -1,0 +1,133 @@
+basePath: /person-oai-web/rs
+definitions:
+  Person:
+    properties:
+      date:
+        format: date-time
+        type: string
+      firstName:
+        maxLength: 20
+        minLength: 0
+        type: string
+        pattern: '[a-z][a-z]*'
+      id:
+        format: int32
+        type: integer
+      lastName:
+        maxLength: 20
+        minLength: 0
+        type: string
+    type: object
+host: 'localhost:8080'
+info:
+  title: Person API
+  version: 1.0.0
+paths:
+  /persons:
+    get:
+      operationId: findAll
+      parameters: []
+      produces:
+        - application/json
+        - application/xml
+      responses:
+        '200':
+          description: successful operation
+          headers: {}
+          schema:
+            items:
+              $ref: '#/definitions/Person'
+            type: array
+          examples:
+            application/json:
+              - date: '2000-01-23T04:56:07.000+00:00'
+                firstName: aaaa
+                lastName: AAAA
+                id: 1
+              - date: '2000-01-23T04:56:07.000+00:00'
+                firstName: bbbb
+                lastName: BBBB
+                id: 2
+            application/xml: >-
+              <?xml version="1.0" encoding="UTF-8" standalone="yes"?> <Persons>
+              <Person> <id>1</id> <firstName>aaaa</firstName>
+              <lastName>AAAA</lastName> </Person> <Person> <id>1</id>
+              <firstName>aaaa</firstName> <lastName>AAAA</lastName> </Person>
+              </Persons>
+        '400':
+          description: Bad request.
+          schema:
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            code: '400'
+            message: Bad request.
+        '500':
+          description: An unexpected error occured.
+          schema:
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            code: '500'
+            message: An unexpected error occured.
+    post:
+      consumes:
+        - application/json
+      operationId: create
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Person'
+      responses:
+        default:
+          description: successful operation
+    put:
+      operationId: update
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Person'
+      responses:
+        default:
+          description: successful operation
+  '/persons/{id}':
+    delete:
+      operationId: remove
+      parameters:
+        - format: int32
+          in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        default:
+          description: successful operation
+    get:
+      operationId: find
+      parameters:
+        - format: int32
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          headers: {}
+          schema:
+            $ref: '#/definitions/Person'
+schemes:
+  - http
+swagger: '2.0'
